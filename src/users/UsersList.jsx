@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { EmployeeContext } from '../EmployeeContext';
 
 export default function UsersList() {
-    const { employees, setEmployees, deleteEmployee } = useContext(EmployeeContext);
+    const { employees, setSelectEmployee, deleteEmployee } = useContext(EmployeeContext);
+    console.log(":: EMPLOYEES ::", employees);
     return (
         <div className="card">
             <div className="card-header">
@@ -26,7 +27,7 @@ export default function UsersList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {(employees) || [].map((employee) => (
+                        {(employees || []).map((employee) => (
                             <tr key={employee.id}>
                                 <td>{employee.firstName}</td>
                                 <td>{employee.lastName}</td>
@@ -42,7 +43,7 @@ export default function UsersList() {
                                     <div className="d-flex gap-2">
                                         <button
                                             className="btn btn-primary btn-sm"
-                                            onClick={() => setEmployees(employee)}
+                                            onClick={() => setSelectEmployee(employee)}
                                         >
                                             Edit
                                         </button>

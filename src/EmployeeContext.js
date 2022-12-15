@@ -1,84 +1,69 @@
 import React, { createContext, useState, useEffect } from "react";
-
 export const EmployeeContext = createContext();
 
-export default function EmployeeProvider({ children }) {
-  const [employees, setEmployees] = useState(
-    JSON.parse(localStorage.getItem("employees") || "[]")
-  );
-  /* {
-			id: (new Date()).getTime(),
-            firstName: 'Syed',
-            lastName: 'Tasneem',
-            email: 'syed@tasneem.me',
-            contactNo: '9876543210',
-            dateOfBirth: '01/01/1999',
-            gender: 'Female',
-            country: 'India',
-            state: 'AP',
-            city: 'Ongole',
-            address: 'Islampet Area',
-            hobbies: ['Reading Books', 'Tv'],
-        },
-		{
-			id: (new Date()).getTime() + 1,
-            firstName: 'Ranga',
-            lastName: 'Raju',
-            email: 'Ranga@Raju.me',
-            contactNo: '787878900',
-            dateOfBirth: '01/05/1992',
-            gender: 'Male',
-            country: 'India',
-            state: 'Andhra Pradesh',
-            city: 'Guntur',
-            address: 'Arundelpet 4th lane',
-            hobbies: ['Tv'],
-        },
-		{
-			id: (new Date()).getTime() + 2,
-            firstName: 'Shaik',
-            lastName: 'Afrah',
-            email: 'shaik@afrah.me',
-            contactNo: '9876543210',
-            dateOfBirth: '01/01/1999',
-            gender: 'Female',
-            country: 'India',
-            state: 'AP',
-            city: 'Ongole',
-            address: 'Islampet Area',
-            hobbies: ['Reading', 'Browsing'],
-        }
-    }
+const initialData = [
+  {
+    id: (new Date()).getTime(),
+    firstName: 'Syed',
+    lastName: 'Tasneem',
+    email: 'syed@tasneem.me',
+    contactNo: '9876543210',
+    dateOfBirth: '01/01/1999',
+    gender: 'Female',
+    country: 'India',
+    state: 'AP',
+    city: 'Ongole',
+    address: 'Islampet Area',
+    hobbies: ['Reading Books', 'Tv'],
+  },
+  {
+    id: (new Date()).getTime() + 1,
+    firstName: 'Ranga',
+    lastName: 'Raju',
+    email: 'Ranga@Raju.me',
+    contactNo: '787878900',
+    dateOfBirth: '01/05/1992',
+    gender: 'Male',
+    country: 'India',
+    state: 'Andhra Pradesh',
+    city: 'Guntur',
+    address: 'Arundelpet 4th lane',
+    hobbies: ['Tv'],
+  },
+  {
+    id: (new Date()).getTime() + 2,
+    firstName: 'Shaik',
+    lastName: 'Afrah',
+    email: 'shaik@afrah.me',
+    contactNo: '9876543210',
+    dateOfBirth: '01/01/1999',
+    gender: 'Female',
+    country: 'India',
+    state: 'AP',
+    city: 'Ongole',
+    address: 'Islampet Area',
+    hobbies: ['Reading', 'Browsing'],
+  }
+]
 
-*/
+export default function EmployeeProvider({ children }) {
+  const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
     // Get the data from local storage
-    const employees = JSON.parse(localStorage.getItem("employees") || "[]");
-
-    // Update the state with the data from local storage
-    if (employees) {
-      setEmployees(employees);
-    }
+    const localData = localStorage.getItem("employees");
+    console.log(":: JSON.parse(localData) ::", JSON.parse(localData));
+    const localEmployees = (localData && localData !== 'undefined') ? JSON.parse(localData) : [];
+    const initialEmployees = localEmployees.length === 0 ? initialData : localEmployees;
+    setEmployees(initialEmployees);
   }, []);
 
   useEffect(() => {
-    // Store the data in local storage
-    if (employees) {
+    if (employees && employees.length) {
+      console.log(":: useEffect ::", employees);
       localStorage.setItem("employees", JSON.stringify(employees));
     }
   }, [employees]);
-
-  // Create state variables to store the data
-  const [data, setData] = useState({});
-
-  // Use the useEffect hook to retrieve the data from local storage
-  useEffect(() => {
-    const dataFromStorage = localStorage.getItem("data");
-    if (dataFromStorage) {
-      setData(JSON.parse(dataFromStorage));
-    }
-  }, []);
 
   const [selectEmployee, setSelectEmployee] = useState(null);
 
@@ -102,9 +87,6 @@ export default function EmployeeProvider({ children }) {
     setEmployees(employees.filter((employee) => employee.id !== id));
   };
 
-  const getEmployee = (id) => {
-    return data[id];
-  };
 
   return (
     <EmployeeContext.Provider
@@ -116,7 +98,6 @@ export default function EmployeeProvider({ children }) {
         deleteEmployee,
         setSelectEmployee,
         selectEmployee,
-        getEmployee,
       }}
     >
       {children}

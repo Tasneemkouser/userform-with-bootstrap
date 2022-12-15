@@ -358,7 +358,7 @@ export default function UserForm() {
                         {errors.hobbies && <div class="text-danger">{errors.hobbies}</div>}
                     </div>
 
-                    <div className="col-12">
+                   {!form.id ? <div className="col-12">
                         <div className="form-check">
                             <input
                                 className="form-check-input"
@@ -369,10 +369,9 @@ export default function UserForm() {
                             />
                             <label className="form-check-label" htmlFor="agreed">
                                 I Agree
-                
-                            </label>cc
+                            </label>
                         </div>
-                    </div>
+                    </div> : null}
                     <div className="col-12 d-flex gap-2">
                         <button type="submit" className="btn btn-primary">
                             {form.id ? 'Update Employee' : 'Add Employee'}
