@@ -26,7 +26,7 @@ export default function UsersList() {
                         </tr>
                     </thead>
                     <tbody>
-                        {employees.map((employee) => (
+                        {(employees) || [].map((employee) => (
                             <tr key={employee.id}>
                                 <td>{employee.firstName}</td>
                                 <td>{employee.lastName}</td>

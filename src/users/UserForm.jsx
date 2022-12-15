@@ -370,7 +370,7 @@ export default function UserForm() {
                             <label className="form-check-label" htmlFor="agreed">
                                 I Agree
                 
-                            </label>
+                            </label>cc
                         </div>
                     </div>
                     <div className="col-12 d-flex gap-2">
